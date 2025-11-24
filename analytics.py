@@ -20,9 +20,9 @@ class StudentAnalytics:
    
     def impute_missing(self, df: pd.DataFrame) -> pd.DataFrame:
         
-        df['height_cm'] = df.groupby('gender')['height_cm'].transform(lambda x: x.fillna(x.mean()))
-        df['weight_kg'] = df.groupby('gender')['weight_kg'].transform(lambda x: x.fillna(x.mean()))
-        df['gpa'] = df.groupby('major')['gpa'].transform(lambda x: x.fillna(x.mean()))
+        df['height_cm'] = df.groupby('gender')['height_cm'].transform(lambda x: x.fillna(x.median()))
+        df['weight_kg'] = df.groupby('gender')['weight_kg'].transform(lambda x: x.fillna(x.median()))
+        df['gpa'] = df.groupby('major')['gpa'].transform(lambda x: x.fillna(x.median()))
         return df
     
     def add_bmi(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -39,7 +39,7 @@ class StudentAnalytics:
         return df
     
     def calculate_zscores(self, df: pd.DataFrame, ) -> pd.DataFrame:
-        col_to_score = ['gpa', 'credit', 'bmi', 'age']   
+        col_to_score = ['gpa', 'credits', 'bmi', 'age']   
 
         for col in col_to_score:
             if col in df.columns:
@@ -65,5 +65,20 @@ class StudentAnalytics:
        
         return df
 
-                
+    def get_summary_by_major(self, df: pd.DataFrame):
+        summary = df.groupby('major').agg({
+            'student_id': 'count',
+            'gpa': 'mean',
+            'credit': 'mean',
+            'bmi': 'mean',
+        }).reset_index()
+        summary.columns = ['major', 'n_students', 'mean_gpa', 'mean_credit', 'mean_bmi']
+        summary.sort_values(by = 'mean_gpa', ascending= False)
+
+    def get_top_k_student(self, df = pd.DataFrame, k: int = 3):
+        sorted_df = df. sort_values(
+            by = ['major', 'gpa', 'credit'], 
+            ascending= [ True, False, False])
+        return sorted_df.groupby('major').head(k)
+
      
