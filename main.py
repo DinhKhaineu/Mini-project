@@ -17,19 +17,18 @@ def main():
         print("\nFailed to fetch data or database is empty. Exiting.")
         return
 
-    # --- 3. EDA / Inspection (Your Lecturer's Step 4) ---
+   
     print("\n--- Initial Data Inspection ---")
     print(raw_df.info())
     print("\n--- Missing Value Counts ---")
     print(raw_df.isna().sum())
 
-    # --- 4. Analysis Phase ---
+  
     print("\nStep 2: Running data analysis...")
-    # Pass the DataFrame to the analytics module
-    # It is NOT fetching its own data
+   
     final_report_df = analytics.run_full_analysis(raw_df)
 
-    # --- 5. Output Phase ---
+  
     print("\n--- Analysis Complete. Final Report Head: ---")
     print(final_report_df.head())
     
