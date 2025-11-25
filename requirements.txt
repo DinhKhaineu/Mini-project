@@ -1,8 +1,0 @@
-pandas
-sqlalchemy
-mysql-connector-python
-python-dotenv
-flask
-flask-cors
-streamlit
-requests
