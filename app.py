@@ -26,7 +26,7 @@ def init_system():
         st.error(f"Failed to connect to Database: {e}")
         return None, None
 
-repo, analytics = init_system
+repo, analytics = init_system()
 
 if not repo or not analytics:
     st.stop()
@@ -70,7 +70,7 @@ with tab_report:
 
                     if hasattr(analytics, 'get_summary_by_major'):
                         summary_df = analytics.get_summary_by_major(df_processed)
-                        top_k_df = analytics.get_top_k_students(df_processed)
+                        top_k_df = analytics.get_top_k_student(df_processed)
                     else: 
                         st.warning(f"Function not found")
                         summary_df = None
