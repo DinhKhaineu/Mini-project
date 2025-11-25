@@ -74,7 +74,8 @@ class StudentAnalytics:
         }).reset_index()
         summary.columns = ['major', 'n_students', 'mean_gpa', 'mean_credit', 'mean_bmi']
         summary.sort_values(by = 'mean_gpa', ascending= False)
-
+        return summary
+    
     def get_top_k_student(self, df = pd.DataFrame, k: int = 3):
         sorted_df = df. sort_values(
             by = ['major', 'gpa', 'credit'], 
